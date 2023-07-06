@@ -1,0 +1,43 @@
+//
+//  NetworkManager.swift
+//  Tech News
+//
+//  Created by willhcodes on 6/27/23.
+//
+
+import Foundation
+
+
+class NetworkManager: ObservableObject {
+    
+
+
+    @Published var hitposts = [HitpostData]()
+    
+    func fetch() {
+        if let url = URL(string: "https://hn.algolia.com/api/v1/search?tags=front_page") {
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if error == nil {
+                    
+                    let decoder = JSONDecoder()
+                    
+                    if let safeData = data {
+                        do {
+                            let results = try decoder.decode(Root.self, from: safeData)
+                            
+                            DispatchQueue.main.async {
+                                self.hitposts = results.hits
+                            }
+                        } catch {
+                            
+                            print (error)
+                            
+                        }
+                    }
+                }
+            }
+            task.resume()
+        }
+    }
+}
