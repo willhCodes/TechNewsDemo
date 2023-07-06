@@ -4,7 +4,7 @@
 A demonstration of fetching news from the HN Search API and displaying it on the screen using SwiftUI
 ## Demo
 
-![GIF](giflink)
+![GIF](https://github.com/willhCodes/TechNewsDemo/blob/main/sample.gif)
 ## Highlights
 
 1. Set up a JSON decoding structure
